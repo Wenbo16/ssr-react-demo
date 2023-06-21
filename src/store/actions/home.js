@@ -1,7 +1,7 @@
 export const FETCH_HOME_DATA = 'fetch_home_data';
 
 export const fetchHomeData = async (dispath) => {
-  const data = await new Promise((resolve, reject) => {
+  const data = await new Promise((resolve, _) => {
     setTimeout(() => {
       resolve({
         articles: [

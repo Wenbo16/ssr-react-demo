@@ -6,10 +6,11 @@ import { fetchHomeData } from '../store/actions/home';
 const Home = () => {
   const dispatch = useDispatch();
   const homeData = useSelector((state) => state.home);
-  console.log(homeData);
+  console.log(homeData)
 
   useEffect(() => {
-    dispatch(fetchHomeData);
+    if(!homeData?.articles?.length)
+      dispatch(fetchHomeData);
   }, []);
 
   const renderHead = () => {
