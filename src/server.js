@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import Routes, { routesConfig } from './routes';
-import createStoreInstance from './store';
-import { Provider } from 'react-redux';
 
 const express = require('express');
 const app = express();
@@ -13,26 +11,31 @@ app.use(express.static('dist/public'));
 
 
 app.get('*', (req, res) => {
-  const store = createStoreInstance();
 
   const promises = routesConfig?.map((route) => {
-    const component = route?.component;
+    const {path, component} = route;
 
-    if (route?.path === req?.url && component?.getInitialData) {
-      return component?.getInitialData(store);
+    if (path === req?.url && component?.getInitialData) {
+      return component?.getInitialData();
     } else {
       return null;
     }
   });
 
-  Promise.all(promises).then(() => {
-    const preloadedState = store.getState();
+  Promise.all(promises).then(data => {
+    const dataObj = data.reduce((acc, cur) => {
+      if(cur) {
+        const key = Object.keys(cur)[0];
+        acc[key] = cur[key];
+      }
+      return acc;
+    }, {})
+
+    // const preloadedState = store.getState();
     const content = ReactDOMServer.renderToString(
-      <Provider store={store}>
-        <StaticRouter location={req.url}>
-          <Routes />
-        </StaticRouter>
-      </Provider>
+      <StaticRouter location={req.url}>
+        <Routes data={dataObj}/>
+      </StaticRouter>
     );
   
     const html = `
@@ -42,7 +45,7 @@ app.get('*', (req, res) => {
         <body>
           <div id="root">${content}</div>
           <script>
-            window.__PRELOAD_STATE__=${JSON.stringify(preloadedState)}
+            window.__INITIAL_DATA__=${JSON.stringify(dataObj)}
           </script>
           <script src="bundle_client.js"></script>
         </body>

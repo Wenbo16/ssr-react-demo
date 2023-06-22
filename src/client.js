@@ -1,17 +1,14 @@
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './routes';
-import createStoreInstance from './store';
 
-const store = createStoreInstance(window?.__PRELOAD_STATE__);
+// const store = createStoreInstance(window?.__INITIAL_DATA__);
+const data = window?.__INITIAL_DATA__
 
 hydrateRoot(
   document.getElementById('root'),
-  <Provider store={store}>
-    <BrowserRouter>
-      <Routes />
-    </BrowserRouter>
-  </Provider>
+  <BrowserRouter>
+    <Routes data={data}/>
+  </BrowserRouter>
 );

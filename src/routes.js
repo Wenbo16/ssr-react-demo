@@ -3,7 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import Home from './pages/Home';
 import Personal from './pages/Personal';
 
-const RoutesList = () => {
+const RoutesList = (props) => {
   return (
     <div>
       <ul>
@@ -15,8 +15,8 @@ const RoutesList = () => {
         </li>
       </ul>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/personal" element={<Personal />} />
+        <Route exact path="/" element={<Home {...props.data} />} />
+        <Route path="/personal" element={<Personal {...props.data}/>} />
       </Routes>
     </div>
   );

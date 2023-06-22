@@ -1,18 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { Helmet } from 'react-helmet';
-import { fetchHomeData } from '../store/actions/home';
 
-const Home = () => {
-  const dispatch = useDispatch();
-  const homeData = useSelector((state) => state.home);
-  console.log(homeData)
-
-  useEffect(() => {
-    if(!homeData?.articles?.length)
-      dispatch(fetchHomeData);
-  }, []);
-
+const Home = (props) => {
   const renderHead = () => {
     return (
       <Helmet>
@@ -30,7 +19,7 @@ const Home = () => {
       {renderHead()}
       <h1>首页</h1>
       <ul>
-        {homeData?.articles?.map((article) => (
+        {props.articles?.map((article) => (
           <li key={article?.id}>
             <p>文章标题：{article?.title}</p>
             <p>文章内容：{article?.content}</p>
@@ -42,8 +31,28 @@ const Home = () => {
   );
 };
 
-Home.getInitialData = async (store) => {
-  return store.dispatch(fetchHomeData);
+Home.getInitialData = async () => {
+  const data = await new Promise((resolve, _) => {
+    setTimeout(() => {
+      resolve({
+        articles: [
+          {
+            id: 1,
+            title: '文章标题1',
+            content: '文章内容1',
+          },
+          {
+            id: 2,
+            title: '文章标题2',
+            content: '文章内容2',
+          },
+        ],
+      });
+    }, 2000);
+  });
+  return {
+    articles: data?.articles,
+  }
 };
 
 export default Home;
