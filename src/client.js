@@ -12,7 +12,6 @@ loadableReady(() => {
     document.getElementById('root'),
     <BrowserRouter>
       <Routes data={data} />
-      {/* <App /> */}
     </BrowserRouter>
   );
 })
