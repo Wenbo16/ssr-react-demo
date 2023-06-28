@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
-const Home = (props) => {
+const Home = ({ articles }) => {
+  // const [articlesData, setArticleData] = useState(articles);
+  // useEffect(() => {
+  //     setArticleData(articlesData)  
+  // }, [articlesData])
+
+  // useEffect(() => {
+  //   async function getInitialData() {
+  //     const data = await Home.getInitialData()
+  //     setArticleData(data)
+  //   }
+  //   getInitialData()
+  // }, [])
+
   const renderHead = () => {
     return (
       <Helmet>
@@ -19,7 +32,7 @@ const Home = (props) => {
       {renderHead()}
       <h1>首页</h1>
       <ul>
-        {props.articles?.map((article) => (
+        {articles?.map((article) => (
           <li key={article?.id}>
             <p>文章标题：{article?.title}</p>
             <p>文章内容：{article?.content}</p>
@@ -31,7 +44,7 @@ const Home = (props) => {
   );
 };
 
-Home.getInitialData = async () => {
+export async function getInitialDataHome() {
   const data = await new Promise((resolve, _) => {
     setTimeout(() => {
       resolve({

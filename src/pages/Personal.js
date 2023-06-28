@@ -1,20 +1,20 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-const Personal = (props) => {
+const Personal = ({ personalData }) => {
   return (
     <div>
       <Helmet>
         <title>个人中心页</title>
       </Helmet>
       <h1>个人中心页</h1>
-      <p>名称：{props.personalData?.userInfo?.username}</p>
-      <p>职业：{props.personalData?.userInfo?.job}</p>
+      <p>名称：{personalData?.userInfo?.username}</p>
+      <p>职业：{personalData?.userInfo?.job}</p>
     </div>
   );
 };
 
-Personal.getInitialData = async () => {
+export async function getInitialDataPersonal () {
   const data = await new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve({
