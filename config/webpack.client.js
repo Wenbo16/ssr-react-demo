@@ -25,7 +25,3 @@ module.exports = {
     new CleanWebpackPlugin()
   ],
 };
-
-// const baseConfig = require('./webpack.config')
-
-// module.exports = baseConfig('web')
