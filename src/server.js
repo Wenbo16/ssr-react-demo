@@ -9,8 +9,6 @@ const port = process.env.PORT || 3000;
 
 import { ChunkExtractor } from '@loadable/server'
 
-
-
 app.use(express.static('dist/public'));
 
 
@@ -20,13 +18,6 @@ const webStats = path.resolve(
   __dirname,
   '../dist/public/loadable-stats.json',
 )
-
-const nodeStats = path.resolve(__dirname, '../dist/loadable-stats.json')
-
-
-const nodeExtractor = new ChunkExtractor({ statsFile: nodeStats })
-const { default: App } = nodeExtractor.requireEntrypoint()
-console.log(App)
 
 const webExtractor = new ChunkExtractor({ statsFile: webStats })
 
@@ -49,12 +40,10 @@ const webExtractor = new ChunkExtractor({ statsFile: webStats })
       return acc;
     }, {})
 
-    // const jsx = webExtractor.collectChunks(
-    // <StaticRouter location={req.url}>
-    //   <Routes data={dataObj}/>
-    // </StaticRouter>)
-
-    const jsx = webExtractor.collectChunks(<App />)
+    const jsx = webExtractor.collectChunks(
+    <StaticRouter location={req.url}>
+      <Routes data={dataObj}/>
+    </StaticRouter>)
 
 
     const content = ReactDOMServer.renderToString(

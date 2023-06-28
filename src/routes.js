@@ -4,48 +4,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 // import { getInitialData as getInitialDataPersonal } from './pages/Personal';
 import loadable from '@loadable/component'
 
-// const { getInitialDataHome } = loadable(() => import('./pages/Home'))
-// const { getInitialDataPersonal } = loadable(() => import('./pages/Personal'))
-
-
-async function getInitialDataPersonal () {
-  const data = await new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve({
-        userInfo: {
-          username: 'Tomas',
-          job: '前端工程师',
-        },
-      });
-    }, 2000);
-  });
-  return { personalData: data }
-};
-
-async function getInitialDataHome() {
-  const data = await new Promise((resolve, _) => {
-    setTimeout(() => {
-      resolve({
-        articles: [
-          {
-            id: 1,
-            title: '文章标题1',
-            content: '文章内容1',
-          },
-          {
-            id: 2,
-            title: '文章标题2',
-            content: '文章内容2',
-          },
-        ],
-      });
-    }, 2000);
-  });
-  return {
-    articles: data?.articles,
-  }
-};
-
+const { getInitialDataHome } = loadable(() => import('./pages/Home'))
+const { getInitialDataPersonal } = loadable(() => import('./pages/Personal'))
 
 const Home = loadable(() => import('./pages/Home'))
 const Personal = loadable(() => import('./pages/Personal'))
