@@ -49,7 +49,7 @@ app.get('*', async (req, res) => {
     const content = ReactDOMServer.renderToString(
       jsx
     );
-    console.log(dataObj)
+
     const html = `
       <html>
         <head>

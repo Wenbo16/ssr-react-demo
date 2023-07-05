@@ -7,7 +7,6 @@ import loadable from '@loadable/component'
 // const { getInitialDataHome } = loadable(() => import('./pages/Home'))
 // const { getInitialDataPersonal } = loadable(() => import('./pages/Personal'))
 
-
 async function getInitialDataPersonal () {
   const data = await new Promise((resolve, reject) => {
     setTimeout(() => {
